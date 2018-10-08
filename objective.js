@@ -12,6 +12,28 @@ function Objective() {
     this.color = createVector(random(255), random(255), random(255));
   }
 
-  this.capture_objective = function (objective) {
+  this.coordinate_vector = function() {
+    return createVector(this.x, this.y);
+  };
+
+  this.reward_coordinate_vectors = function () {
+    return [
+      createVector(this.x, this.y),
+      // up/down/left/right
+      createVector(this.x - tile_scale, this.y),
+      createVector(this.x + tile_scale, this.y),
+      createVector(this.x, this.y - tile_scale),
+      createVector(this.x, this.y + tile_scale),
+      // even further up/down/left/right
+      createVector(this.x - 2 * tile_scale, this.y),
+      createVector(this.x + 2 * tile_scale, this.y),
+      createVector(this.x, this.y - 2 * tile_scale),
+      createVector(this.x, this.y + 2 * tile_scale),
+      // diagonals
+      createVector(this.x - tile_scale, this.y - tile_scale),
+      createVector(this.x - tile_scale, this.y + tile_scale),
+      createVector(this.x + tile_scale, this.y - tile_scale),
+      createVector(this.x + tile_scale, this.y + tile_scale)
+    ];
   };
 }

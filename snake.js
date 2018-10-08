@@ -29,7 +29,7 @@ function Snake() {
       rect(this.tail[i].x, this.tail[i].y, tile_scale, tile_scale);
     }
 
-    rect(this.x, this.y, 10, 10);
+    rect(this.x, this.y, tile_scale, tile_scale);
   };
 
   this.turn_to = function(x, y) {

@@ -1,5 +1,5 @@
 var nuwa;
-var tile_scale = 10;
+var tile_scale = 25;
 var vision_radius = 5;
 var drawn_world = {};
 
@@ -31,16 +31,20 @@ function draw() {
   var rows = floor(height / tile_scale);
   for (var y = 0; y < cols; y++) {
     for (var x = 0; x < rows; x++) {
-      var this_cell_position = createVector(x, y);
+      var this_cell_position = createVector(x, y).mult(tile_scale);
       var cell_data = drawn_world[this_cell_position] || null;
       if (cell_data !== null) {
-        fill(cell_data);
+        fill(cell_data.x, cell_data.y, cell_data.z);
         rect(x * tile_scale, y * tile_scale, tile_scale, tile_scale);
       }
     }
   }
 
   if (nuwa.capture_objective(objective)) {
+    var coordinates_to_paint = objective.reward_coordinate_vectors();
+    for (var i = 0; i < coordinates_to_paint.length; i++) {
+      drawn_world[coordinates_to_paint[i]] = objective.color;
+    }
     objective.set_position(random_location());
     objective.randomize_color();
   }
