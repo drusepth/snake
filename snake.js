@@ -19,8 +19,8 @@ function Snake() {
     this.y = this.y + this.yspeed * tile_scale;
 
     // todo remove this when we go infinite
-    this.x = constrain(this.x, 0, width - tile_scale);
-    this.y = constrain(this.y, 0, height - tile_scale);
+    // this.x = constrain(this.x, 0, width - tile_scale);
+    // this.y = constrain(this.y, 0, height - tile_scale);
   };
 
   this.show = function() {
