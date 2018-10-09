@@ -7,12 +7,13 @@ var objective;
 
 function setup() {
   createCanvas(600, 600);
-  frameRate(10);
+  frameRate(20);
 
   objective = new Objective();
   nuwa = new Snake();
 
   objective.set_position(random_location());
+  objective.randomize_color();
 }
 
 function random_location() {
@@ -23,9 +24,8 @@ function random_location() {
 }
 
 function draw() {
-  background(88);
+  background(0, 0, 255);
   nuwa.update();
-  nuwa.show();
 
   var cols = floor(width / tile_scale);
   var rows = floor(height / tile_scale);
@@ -48,9 +48,12 @@ function draw() {
     objective.set_position(random_location());
     objective.randomize_color();
   }
+
+  // Paint nuwa and the objective last, so they're always on top of the painted world
+  nuwa.show();
   nuwa.death();
 
-  fill(objective.color.x, objective.color.y, objective.color.z);
+  fill(0, 255, 255);
   rect(objective.x, objective.y, tile_scale, tile_scale);
 }
 
