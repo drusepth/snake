@@ -3,17 +3,20 @@ var tile_scale = 25;
 var vision_radius = 5;
 var drawn_world = {};
 
-var objective;
+var objective_count = 3;
+var objectives = [];
 
 function setup() {
   createCanvas(600, 600);
   frameRate(20);
 
-  objective = new Objective();
+  for (var i = 0; i < objective_count; i++) {
+    var objective = new Objective();
+    objective.set_position(random_location());
+    objective.randomize_color();
+    objectives.push(objective);
+  }
   nuwa = new Snake();
-
-  objective.set_position(random_location());
-  objective.randomize_color();
 }
 
 function random_location() {
@@ -40,13 +43,16 @@ function draw() {
     }
   }
 
-  if (nuwa.capture_objective(objective)) {
-    var coordinates_to_paint = objective.reward_coordinate_vectors();
-    for (var i = 0; i < coordinates_to_paint.length; i++) {
-      drawn_world[coordinates_to_paint[i]] = objective.color;
+  for (var i = 0; i < objectives.length; i++) {
+    var objective = objectives[i];
+    if (nuwa.capture_objective(objective)) {
+      var coordinates_to_paint = objective.reward_coordinate_vectors();
+      for (var i = 0; i < coordinates_to_paint.length; i++) {
+        drawn_world[coordinates_to_paint[i]] = objective.color;
+      }
+      objective.set_position(random_location());
+      objective.randomize_color();
     }
-    objective.set_position(random_location());
-    objective.randomize_color();
   }
 
   // Paint nuwa and the objective last, so they're always on top of the painted world
@@ -54,7 +60,10 @@ function draw() {
   nuwa.death();
 
   fill(0, 255, 255);
-  rect(objective.x, objective.y, tile_scale, tile_scale);
+  for (var i = 0; i < objectives.length; i++) {
+    var objective = objectives[i];
+    rect(objective.x, objective.y, tile_scale, tile_scale);
+  }
 }
 
 function keyPressed() {
