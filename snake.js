@@ -26,7 +26,10 @@ function Snake() {
   this.show = function() {
     fill(255);
     for (var i = 0; i < this.tail.length; i++) {
-      rect(this.tail[i].x, this.tail[i].y, tile_scale, tile_scale);
+      // Avoid an unfortunate race condition :(
+      if (this.tail[i] !== undefined) {
+        rect(this.tail[i].x, this.tail[i].y, tile_scale, tile_scale);
+      }
     }
 
     rect(this.x, this.y, tile_scale, tile_scale);
@@ -51,10 +54,15 @@ function Snake() {
   this.death = function() {
     for (var i = 0; i < this.tail.length; i++) {
       var pos = this.tail[i];
-      var d = dist(this.x, this.y, pos.x, pos.y);
-      if (d < 1) {
-        this.total = 0;
-        this.tail = [];
+      if (pos === undefined) {
+        continue;
+      }
+      var distance = dist(this.x, this.y, pos.x, pos.y);
+      if (distance < 1) {
+        this.total  = 0;
+        this.tail   = [];
+        this.xspeed = 0;
+        this.yspeed = 0;
       }
     }
   }

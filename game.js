@@ -50,6 +50,8 @@ function draw() {
       for (var i = 0; i < coordinates_to_paint.length; i++) {
         drawn_world[coordinates_to_paint[i]] = objective.color;
       }
+
+      // Re-use this objective instead of making a new one + garbage collecting
       objective.set_position(random_location());
       objective.randomize_color();
     }
