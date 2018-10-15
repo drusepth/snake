@@ -8,7 +8,7 @@ var objectives = [];
 
 function setup() {
   createCanvas(600, 600);
-  frameRate(20);
+  frameRate(10);
 
   for (var i = 0; i < objective_count; i++) {
     var objective = new Objective();
