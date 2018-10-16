@@ -15,8 +15,8 @@ function Snake() {
     }
     this.tail[this.total - 1] = createVector(this.x, this.y);
 
-    this.x = this.x + this.xspeed * tile_scale;
-    this.y = this.y + this.yspeed * tile_scale;
+    this.x = this.x + this.xspeed;
+    this.y = this.y + this.yspeed;
 
     // todo remove this when we go infinite
     // this.x = constrain(this.x, 0, width - tile_scale);
@@ -32,7 +32,12 @@ function Snake() {
       }
     }
 
-    rect(this.x, this.y, tile_scale, tile_scale);
+    var cols = floor(width / tile_scale);
+    var rows = floor(height / tile_scale);
+
+    // Since the map is moving under us, we can safely assume we're always in
+    // the middle of it.
+    rect(rows / 2 * tile_scale, cols / 2 * tile_scale, tile_scale, tile_scale);
   };
 
   this.turn_to = function(x, y) {
@@ -42,6 +47,7 @@ function Snake() {
 
   this.capture_objective = function (objective) {
     var distance = dist(this.x, this.y, objective.x, objective.y);
+    console.log('obj distance', distance);
 
     if (distance < 1) {
       this.total++;

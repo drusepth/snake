@@ -24,20 +24,20 @@ function Objective() {
     return [
       createVector(this.x, this.y),
       // up/down/left/right
-      createVector(this.x - tile_scale, this.y),
-      createVector(this.x + tile_scale, this.y),
-      createVector(this.x, this.y - tile_scale),
-      createVector(this.x, this.y + tile_scale),
+      createVector(this.x - 1, this.y),
+      createVector(this.x + 1, this.y),
+      createVector(this.x, this.y - 1),
+      createVector(this.x, this.y + 1),
       // even further up/down/left/right
-      createVector(this.x - 2 * tile_scale, this.y),
-      createVector(this.x + 2 * tile_scale, this.y),
-      createVector(this.x, this.y - 2 * tile_scale),
-      createVector(this.x, this.y + 2 * tile_scale),
+      createVector(this.x - 2, this.y),
+      createVector(this.x + 2, this.y),
+      createVector(this.x, this.y - 2),
+      createVector(this.x, this.y + 2),
       // diagonals
-      createVector(this.x - tile_scale, this.y - tile_scale),
-      createVector(this.x - tile_scale, this.y + tile_scale),
-      createVector(this.x + tile_scale, this.y - tile_scale),
-      createVector(this.x + tile_scale, this.y + tile_scale)
+      createVector(this.x - 1, this.y - 1),
+      createVector(this.x - 1, this.y + 1),
+      createVector(this.x + 1, this.y - 1),
+      createVector(this.x + 1, this.y + 1)
     ];
   };
 }
