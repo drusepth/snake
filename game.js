@@ -1,9 +1,9 @@
 var nuwa;
-var tile_scale = 25;
+var tile_scale = 20;
 var vision_radius = 5;
 var drawn_world = {};
 
-var objective_count = 1;
+var objective_count = 10;
 var objectives = [];
 
 function setup() {
@@ -52,14 +52,6 @@ function draw() {
       }
     }
   }
-
-  // we have relative movement kind of working, but not really
-  // check the demo
-  // snake is centered
-  // objectives move as you'd expect
-  // you can remove the || createVector abpve (replace with || null)
-  // need to capture objectives with relative distance instead?
-  // need to figure out a way to label each square properly, would make things a lot easier (and/or borders)
 
   for (var i = 0; i < objectives.length; i++) {
     var objective = objectives[i];
