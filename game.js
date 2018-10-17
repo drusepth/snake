@@ -1,5 +1,6 @@
 var nuwa;
 var tile_scale = 20;
+var expansion_radius = 10;
 var vision_radius = 5;
 var drawn_world = {};
 
@@ -10,20 +11,20 @@ function setup() {
   createCanvas(600, 600);
   frameRate(10);
 
+  nuwa = new Snake();
   for (var i = 0; i < objective_count; i++) {
     var objective = new Objective();
     objective.set_position(random_location());
     objective.randomize_color();
     objectives.push(objective);
   }
-  nuwa = new Snake();
 }
 
 function random_location() {
-  var cols = floor(width / tile_scale);
-  var rows = floor(height / tile_scale);
-
-  return createVector(floor(random(cols)), floor(random(rows)));
+  return createVector(
+    floor(random(nuwa.x - expansion_radius, nuwa.x + expansion_radius)),
+    floor(random(nuwa.y - expansion_radius, nuwa.y + expansion_radius))
+  );
 }
 
 function draw() {
@@ -32,7 +33,7 @@ function draw() {
 
   var cols = floor(width / tile_scale);
   var rows = floor(height / tile_scale);
-  console.log('Nuwa:', nuwa.x, nuwa.y);
+  //console.log('Nuwa:', nuwa.x, nuwa.y);
 
   var upper_left_boundary = createVector(nuwa.x - cols / 2, nuwa.y - rows / 2);
   var bottom_right_boundary = createVector(nuwa.x + cols / 2, nuwa.y + rows / 2);
@@ -55,7 +56,7 @@ function draw() {
 
   for (var i = 0; i < objectives.length; i++) {
     var objective = objectives[i];
-    console.log('Objective:', objective.x, objective.y);
+    //console.log('Objective:', objective.x, objective.y);
     if (nuwa.capture_objective(objective)) {
       var coordinates_to_paint = objective.reward_coordinate_vectors();
       for (var i = 0; i < coordinates_to_paint.length; i++) {
@@ -82,7 +83,7 @@ function draw() {
   for (var i = 0; i < objectives.length; i++) {
     var objective = objectives[i];
     var relative_coordinates = createVector(objective.x - x_translation, objective.y - y_translation);
-    console.log("Drawing objective @", relative_coordinates.x, relative_coordinates.y);
+    //console.log("Drawing objective @", relative_coordinates.x, relative_coordinates.y);
     rect(relative_coordinates.x * tile_scale, relative_coordinates.y * tile_scale, tile_scale, tile_scale);
   }
 }

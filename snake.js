@@ -26,7 +26,7 @@ function Snake() {
   this.show = function() {
     var cols = floor(width / tile_scale);
     var rows = floor(height / tile_scale);
-    var center_point = createVector(parseInt(cols / 2), parseInt(rows / 2));
+    var center_point = createVector(floor(cols / 2), floor(rows / 2));
     var x_translation = nuwa.x - center_point.x;
     var y_translation = nuwa.y - center_point.y;
 
@@ -36,10 +36,8 @@ function Snake() {
       rect(relative_position.x * tile_scale, relative_position.y * tile_scale, tile_scale, tile_scale);
     }
 
-
-    // Since the map is moving under us, we can safely assume we're always in
-    // the middle of it.
-    rect(rows / 2 * tile_scale, cols / 2 * tile_scale, tile_scale, tile_scale);
+    // Since the map is moving under us, we can safely assume we're always in the middle of it.
+    rect(floor(rows / 2) * tile_scale, floor(cols / 2) * tile_scale, tile_scale, tile_scale);
   };
 
   this.turn_to = function(x, y) {
@@ -49,10 +47,13 @@ function Snake() {
 
   this.capture_objective = function (objective) {
     var distance = dist(this.x, this.y, objective.x, objective.y);
-    console.log('obj distance', distance);
+    //console.log('obj distance', distance);
 
     if (distance < 1) {
       this.total++;
+      if (this.total % 20 == 0 && tile_scale > 5) {
+        tile_scale -= 5;
+      }
       return true;
     } else {
       return false;
@@ -71,6 +72,7 @@ function Snake() {
         this.tail   = [];
         this.xspeed = 0;
         this.yspeed = 0;
+        tile_scale = 20;
       }
     }
   }
