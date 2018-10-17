@@ -1,8 +1,8 @@
 function Snake() {
   this.x = 0;
   this.y = 0;
-  this.xspeed = 1;
-  this.yspeed = 0;
+  this.xspeed = 0;
+  this.yspeed = -1;
   this.total = 0;
   this.tail = [];
 
@@ -17,10 +17,6 @@ function Snake() {
 
     this.x = this.x + this.xspeed;
     this.y = this.y + this.yspeed;
-
-    // todo remove this when we go infinite
-    // this.x = constrain(this.x, 0, width - tile_scale);
-    // this.y = constrain(this.y, 0, height - tile_scale);
   };
 
   this.show = function() {
