@@ -32,8 +32,10 @@ function Snake() {
 
     fill(255);
     for (var i = 0; i < this.tail.length; i++) {
-      var relative_position = createVector(this.tail[i].x - x_translation, this.tail[i].y - y_translation);
-      rect(relative_position.x * tile_scale, relative_position.y * tile_scale, tile_scale, tile_scale);
+      if (this.tail[i] !== null) {
+        var relative_position = createVector(this.tail[i].x - x_translation, this.tail[i].y - y_translation);
+        rect(relative_position.x * tile_scale, relative_position.y * tile_scale, tile_scale, tile_scale);
+      }
     }
 
     // Since the map is moving under us, we can safely assume we're always in the middle of it.
