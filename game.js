@@ -2,6 +2,7 @@ var nuwa;
 var tile_scale = 20;
 var expansion_radius = 10;
 var vision_radius = 5;
+var draw_world_grid = true;
 var drawn_world = {};
 
 var objective_count = 20;
@@ -33,7 +34,6 @@ function draw() {
 
   var cols = floor(width / tile_scale);
   var rows = floor(height / tile_scale);
-  //console.log('Nuwa:', nuwa.x, nuwa.y);
 
   var upper_left_boundary = createVector(nuwa.x - cols / 2, nuwa.y - rows / 2);
   var bottom_right_boundary = createVector(nuwa.x + cols / 2, nuwa.y + rows / 2);
@@ -41,6 +41,12 @@ function draw() {
   var center_point = createVector(parseInt(cols / 2), parseInt(rows / 2));
   var x_translation = nuwa.x - center_point.x;
   var y_translation = nuwa.y - center_point.y;
+
+  if (draw_world_grid) {
+    stroke(0, 0, 0);
+  } else {
+    noStroke();
+  }
 
   for (var y = upper_left_boundary.y; y < bottom_right_boundary.y; y++) {
     for (var x = upper_left_boundary.x; x < bottom_right_boundary.x; x++) {
@@ -53,6 +59,8 @@ function draw() {
       }
     }
   }
+
+  stroke(0, 0, 0);
 
   for (var i = 0; i < objectives.length; i++) {
     var objective = objectives[i];
@@ -125,6 +133,10 @@ function keyPressed() {
       if (tile_scale < 30) {
         tile_scale += 5;
       }
+      break;
+
+    case 71: // g
+      draw_world_grid = !draw_world_grid;
       break;
 
     default:
