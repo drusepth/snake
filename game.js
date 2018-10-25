@@ -28,7 +28,7 @@ function random_location() {
 }
 
 function draw() {
-  background(0, 0, 200);
+  background(25, 105, 255);
   nuwa.update();
 
   var cols = floor(width / tile_scale);
@@ -60,7 +60,7 @@ function draw() {
     if (nuwa.capture_objective(objective)) {
       var coordinates_to_paint = objective.reward_coordinate_vectors();
       for (var i = 0; i < coordinates_to_paint.length; i++) {
-        drawn_world[coordinates_to_paint[i]] = objective.color;
+        drawn_world[coordinates_to_paint[i]] = objective.reward;
       }
 
       // Re-use this objective instead of making a new one + garbage collecting
@@ -89,9 +89,6 @@ function draw() {
 }
 
 function keyPressed() {
-  console.log('key pressed');
-  console.log(keyCode);
-  console.log(nuwa.current_direction());
   switch (keyCode) {
     case UP_ARROW:
       if (nuwa.current_direction() != 'down') {
