@@ -36,21 +36,20 @@ function Objective() {
         ]);
         break;
 
+        case this.comparable_vector(this.TILE_GRASS):
+          this.reward = this.random_selection([
+            this.TILE_WATER,
+            this.TILE_DIRT,
+            this.TILE_FOREST,
+            this.TILE_FOREST
+          ]);
+          break;
+
       case this.comparable_vector(this.TILE_DIRT):
         this.reward = this.random_selection([
           this.TILE_SAND,
           this.TILE_GRASS,
-          this.TILE_WATER,
-          this.TILE_FOREST
-        ]);
-        break;
-
-      case this.comparable_vector(this.TILE_GRASS):
-        this.reward = this.random_selection([
-          this.TILE_WATER,
-          this.TILE_DIRT,
-          this.TILE_FOREST,
-          this.TILE_FOREST
+          this.TILE_WATER
         ]);
         break;
 
@@ -64,8 +63,7 @@ function Objective() {
       case this.comparable_vector(this.TILE_SAND):
         this.reward = this.random_selection([
           this.TILE_DIRT,
-          this.TILE_SAND,
-          this.TILE_GRASS,
+          this.TILE_SAND
         ]);
         break;
 
