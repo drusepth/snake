@@ -79,12 +79,13 @@ function draw() {
   var x_translation = nuwa.x - center_point.x;
   var y_translation = nuwa.y - center_point.y;
 
-  fill(0, 255, 255);
   for (var i = 0; i < objectives.length; i++) {
     var objective = objectives[i];
+    var objective_color = objective.pre_capture_color();
     var relative_coordinates = createVector(objective.x - x_translation, objective.y - y_translation);
     //console.log("Drawing objective @", relative_coordinates.x, relative_coordinates.y);
-    rect(relative_coordinates.x * tile_scale, relative_coordinates.y * tile_scale, tile_scale, tile_scale);
+    fill(objective_color.x, objective_color.y, objective_color.z);
+    ellipse(relative_coordinates.x * tile_scale + (tile_scale / 2), relative_coordinates.y * tile_scale + (tile_scale / 2), tile_scale, tile_scale);
   }
 }
 

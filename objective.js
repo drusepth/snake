@@ -4,11 +4,15 @@ function Objective() {
   this.color = null;
   this.reward = null;
 
-  this.TILE_WATER  = createVector(25, 105, 255);
-  this.TILE_GRASS  = createVector(144, 238, 144);
-  this.TILE_SAND   = createVector(194, 178, 128);
-  this.TILE_DIRT   = createVector(237, 201, 175);
-  this.TILE_FOREST = createVector(34, 139, 34);
+  this.TILE_WATER    = createVector(25, 105, 255);
+  this.TILE_GRASS    = createVector(144, 238, 144);
+  this.TILE_SAND     = createVector(194, 178, 128);
+  this.TILE_DIRT     = createVector(237, 201, 175);
+  this.TILE_FOREST   = createVector(34, 139, 34);
+
+  this.pre_capture_color = function () {
+    return this.reward;
+  };
 
   this.set_position = function(coordinate_vector) {
     this.x = coordinate_vector.x;
@@ -31,7 +35,8 @@ function Objective() {
       case this.TILE_DIRT:
         this.reward = this.random_selection([
           this.TILE_GRASS,
-          this.TILE_SAND
+          this.TILE_SAND,
+          this.TILE_WATER
         ]);
         break;
 
@@ -44,11 +49,18 @@ function Objective() {
         break;
 
       case this.TILE_FOREST:
-        this.reward = this.TILE_GRASS;
+        this.reward = this.random_selection([
+          this.TILE_GRASS,
+          this.TILE_FOREST
+        ]);
         break;
 
       case this.TILE_SAND:
-        this.reward = this.TILE_GRASS;
+        this.reward = this.random_selection([
+          this.TILE_GRASS,
+          this.TILE_DIRT,
+          this.TILE_SAND
+        ]);
         break;
 
       default:
