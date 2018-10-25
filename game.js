@@ -89,13 +89,50 @@ function draw() {
 }
 
 function keyPressed() {
-  if (keyCode === UP_ARROW) {
-    nuwa.turn_to(0, -1);
-  } else if (keyCode === DOWN_ARROW) {
-    nuwa.turn_to(0, 1);
-  } else if (keyCode === RIGHT_ARROW) {
-    nuwa.turn_to(1, 0)
-  } else if (keyCode === LEFT_ARROW) {
-    nuwa.turn_to(-1, 0);
+  console.log('key pressed');
+  console.log(keyCode);
+  console.log(nuwa.current_direction());
+  switch (keyCode) {
+    case UP_ARROW:
+      if (nuwa.current_direction() != 'down') {
+        nuwa.turn_to(0, -1);
+      }
+      break;
+
+    case DOWN_ARROW:
+      if (nuwa.current_direction() != 'up') {
+        nuwa.turn_to(0, 1);
+      }
+      break;
+
+    case RIGHT_ARROW:
+      if (nuwa.current_direction() != 'left') {
+        nuwa.turn_to(1, 0);
+      }
+      break;
+
+    case LEFT_ARROW:
+      if (nuwa.current_direction() != 'right') {
+        nuwa.turn_to(-1, 0);
+      }
+      break;
+
+    case 189: // minus key
+      if (tile_scale > 5) {
+        tile_scale -= 5;
+      }
+      console.log('new tile scale: ' + tile_scale);
+      break;
+
+    case 187: // plus key
+      if (tile_scale < 30) {
+        tile_scale += 5;
+      }
+      console.log('new tile scale: ' + tile_scale);
+      break;
+
+    default:
+      console.log(keyCode + ' pressed.');
+
   }
 }

@@ -42,6 +42,19 @@ function Snake() {
     this.xspeed = x;
     this.yspeed = y;
   };
+  this.current_direction = function () {
+    if (this.xspeed == 0 && this.yspeed == -1) {
+      return 'up';
+    } else if (this.xspeed == 0 && this.yspeed == 1) {
+      return 'down';
+    } else if (this.xspeed == 1 && this.yspeed == 0) {
+      return 'right';
+    } else if (this.xspeed == -1 && this.yspeed == 0) {
+      return 'left';
+    } else {
+      console.log(this.xspeed, this.yspeed);
+    }
+  }
 
   this.capture_objective = function (objective) {
     var distance = dist(this.x, this.y, objective.x, objective.y);
