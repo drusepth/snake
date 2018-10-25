@@ -16,7 +16,7 @@ function setup() {
   canvas.parent('game');
   frameRate(10);
 
-  expansion_radius = floor(height / tile_scale) * floor(width / tile_scale) / random(100, 200);
+  expansion_radius = floor(height / tile_scale) * floor(width / tile_scale) / random(250, 300);
 
   nuwa = new Snake();
   for (var i = 0; i < objective_count; i++) {
