@@ -3,6 +3,7 @@ var tile_scale = 20;
 var expansion_radius = 10;
 var draw_world_grid = true;
 var drawn_world = {};
+var game_paused = false;
 
 var objective_count = 25;
 var objectives = [];
@@ -137,6 +138,15 @@ function keyPressed() {
 
     case 71: // g
       draw_world_grid = !draw_world_grid;
+      break;
+
+    case 32: // space bar
+      if (game_paused) {
+        frameRate(10);
+      } else {
+        frameRate(0);
+      }
+      game_paused = !game_paused;
       break;
 
     default:

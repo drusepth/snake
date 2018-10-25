@@ -11,7 +11,7 @@ function Objective() {
   this.TILE_FOREST   = createVector(34, 139, 34);
 
   this.pre_capture_color = function () {
-    return this.reward;
+    return this.reward || this.TILE_WATER;
   };
 
   this.set_position = function(coordinate_vector) {
