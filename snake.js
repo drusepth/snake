@@ -61,7 +61,7 @@ function Snake() {
 
     if (distance < 1) {
       this.total++;
-      if (this.total % 30 == 0 && tile_scale > 5) {
+      if (this.total % 40 == 0 && tile_scale > 5) {
         tile_scale -= 5;
       }
 

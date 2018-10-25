@@ -5,8 +5,8 @@ function Objective() {
   this.reward = null;
 
   this.TILE_WATER    = createVector(25, 105, 255);
-  this.TILE_GRASS    = createVector(144, 238, 144);
   this.TILE_SAND     = createVector(194, 178, 128);
+  this.TILE_GRASS    = createVector(144, 238, 144);
   this.TILE_DIRT     = createVector(237, 201, 175);
   this.TILE_FOREST   = createVector(34, 139, 34);
 
@@ -33,9 +33,10 @@ function Objective() {
 
       case this.TILE_DIRT:
         this.reward = this.random_selection([
-          this.TILE_GRASS,
           this.TILE_SAND,
-          this.TILE_WATER
+          this.TILE_GRASS,
+          this.TILE_WATER,
+          this.TILE_FOREST
         ]);
         break;
 
@@ -43,22 +44,23 @@ function Objective() {
         this.reward = this.random_selection([
           this.TILE_WATER,
           this.TILE_DIRT,
+          this.TILE_FOREST,
           this.TILE_FOREST
         ]);
         break;
 
       case this.TILE_FOREST:
         this.reward = this.random_selection([
+          this.TILE_FOREST,
           this.TILE_GRASS,
-          this.TILE_FOREST
         ]);
         break;
 
       case this.TILE_SAND:
         this.reward = this.random_selection([
-          this.TILE_GRASS,
           this.TILE_DIRT,
-          this.TILE_SAND
+          this.TILE_SAND,
+          this.TILE_GRASS,
         ]);
         break;
 
