@@ -82,9 +82,7 @@ function Objective() {
   }
 
   this.random_selection = function(options_list) {
-    console.log(options_list);
     var chosen_option = floor(random(options_list.length));
-    console.log(chosen_option);
     return options_list[chosen_option];
   };
 
