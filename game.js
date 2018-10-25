@@ -1,11 +1,10 @@
 var nuwa;
 var tile_scale = 20;
 var expansion_radius = 10;
-var vision_radius = 5;
 var draw_world_grid = true;
 var drawn_world = {};
 
-var objective_count = 20;
+var objective_count = 25;
 var objectives = [];
 
 function setup() {
