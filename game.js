@@ -133,13 +133,13 @@ function keyPressed() {
 
     case 189: // minus key
       if (tile_scale > 5) {
-        tile_scale -= 5;
+        tile_scale -= 1;
       }
       break;
 
     case 187: // plus key
       if (tile_scale < 50) {
-        tile_scale += 5;
+        tile_scale += 1;
       }
       break;
 
