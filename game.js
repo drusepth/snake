@@ -2,6 +2,8 @@ var nuwa;
 var tile_scale = 20;
 var expansion_radius;
 var draw_world_grid = true;
+var draw_nuwa = true;
+var draw_objectives = true;
 var drawn_world = {};
 var game_paused = false;
 
@@ -17,7 +19,7 @@ function setup() {
   canvas.parent('game');
   frameRate(10);
 
-  expansion_radius = floor(height / tile_scale) * floor(width / tile_scale) / random(250, 300);
+  expansion_radius = floor(height / tile_scale) * floor(width / tile_scale) / random(200, 300);
 
   nuwa = new Snake();
   for (var i = 0; i < objective_count; i++) {
@@ -37,7 +39,9 @@ function random_location() {
 
 function draw() {
   background(25, 105, 255);
-  nuwa.update();
+  if (!game_paused) {
+    nuwa.update();
+  }
 
   var cols = floor(width / tile_scale);
   var rows = floor(height / tile_scale);
@@ -68,7 +72,6 @@ function draw() {
   }
 
   stroke(0, 0, 0);
-
   for (var i = 0; i < objectives.length; i++) {
     var objective = objectives[i];
     //console.log('Objective:', objective.x, objective.y);
@@ -85,16 +88,20 @@ function draw() {
   }
 
   // Paint nuwa and the objectives last, so they're always on top of the painted world
-  nuwa.show();
+  if (draw_nuwa) {
+    nuwa.show();
+  }
   nuwa.death();
 
-  for (var i = 0; i < objectives.length; i++) {
-    var objective = objectives[i];
-    var objective_color = objective.pre_capture_color();
-    var relative_coordinates = createVector(objective.x - x_translation, objective.y - y_translation);
-    //console.log("Drawing objective @", relative_coordinates.x, relative_coordinates.y);
-    fill(objective_color.x, objective_color.y, objective_color.z);
-    ellipse(relative_coordinates.x * tile_scale + (tile_scale / 2), relative_coordinates.y * tile_scale + (tile_scale / 2), tile_scale, tile_scale);
+  if (draw_objectives) {
+    for (var i = 0; i < objectives.length; i++) {
+      var objective = objectives[i];
+      var objective_color = objective.pre_capture_color();
+      var relative_coordinates = createVector(objective.x - x_translation, objective.y - y_translation);
+      //console.log("Drawing objective @", relative_coordinates.x, relative_coordinates.y);
+      fill(objective_color.x, objective_color.y, objective_color.z);
+      ellipse(relative_coordinates.x * tile_scale + (tile_scale / 2), relative_coordinates.y * tile_scale + (tile_scale / 2), tile_scale, tile_scale);
+    }
   }
 }
 
@@ -141,17 +148,26 @@ function keyPressed() {
       break;
 
     case 32: // space bar
-      if (game_paused) {
-        frameRate(10);
-      } else {
-        frameRate(0);
-      }
       game_paused = !game_paused;
       break;
 
     case 68: // d
-      game_paused = true;
+      var original_xspeed = nuwa.xspeed;
+      var original_yspeed = nuwa.yspeed;
+      nuwa.xspeed = 0;
+      nuwa.yspeed = 0;
+      draw_nuwa = false;
+      draw_objectives = false;
+
+      draw();
+
       var canvas_export = canvas.canvas.toDataURL('image/jpeg', 1.0);
+
+      nuwa.xspeed = original_xspeed;
+      nuwa.yspeed = original_yspeed;
+      draw_nuwa = true;
+      draw_objectives = true;
+
       var img = document.createElement('img');
       img.src = canvas_export;
 
