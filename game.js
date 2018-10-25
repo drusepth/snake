@@ -9,7 +9,8 @@ var objective_count = 20;
 var objectives = [];
 
 function setup() {
-  createCanvas(600, 600);
+  var canvas = createCanvas(600, 600);
+  canvas.parent('game');
   frameRate(10);
 
   nuwa = new Snake();
