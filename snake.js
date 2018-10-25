@@ -64,6 +64,15 @@ function Snake() {
       if (this.total % 30 == 0 && tile_scale > 5) {
         tile_scale -= 5;
       }
+
+      if (this.total % 2 == 0) {
+        console.log('new obj');
+        var new_objective = new Objective();
+        new_objective.set_position(random_location());
+        new_objective.randomize_color();
+        objectives.push(new_objective);
+      }
+
       return true;
     } else {
       return false;
