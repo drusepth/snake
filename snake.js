@@ -35,7 +35,7 @@ function Snake() {
     }
 
     // Since the map is moving under us, we can safely assume we're always in the middle of it.
-    rect(floor(rows / 2) * tile_scale, floor(cols / 2) * tile_scale, tile_scale, tile_scale);
+    rect(floor(cols / 2) * tile_scale, floor(rows / 2) * tile_scale, tile_scale, tile_scale);
   };
 
   this.turn_to = function(x, y) {

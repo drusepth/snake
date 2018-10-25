@@ -1,6 +1,6 @@
 var nuwa;
 var tile_scale = 20;
-var expansion_radius = 10;
+var expansion_radius;
 var draw_world_grid = true;
 var drawn_world = {};
 var game_paused = false;
@@ -9,9 +9,14 @@ var objective_count = 25;
 var objectives = [];
 
 function setup() {
-  var canvas = createCanvas(600, 600);
+  var canvas = createCanvas(
+    floor(window.innerWidth / tile_scale) * tile_scale,
+    floor(window.innerHeight / tile_scale) * tile_scale
+  );
   canvas.parent('game');
   frameRate(10);
+
+  expansion_radius = floor(height / tile_scale) * floor(width / tile_scale) / random(100, 200);
 
   nuwa = new Snake();
   for (var i = 0; i < objective_count; i++) {
@@ -36,10 +41,10 @@ function draw() {
   var cols = floor(width / tile_scale);
   var rows = floor(height / tile_scale);
 
-  var upper_left_boundary = createVector(nuwa.x - cols / 2, nuwa.y - rows / 2);
-  var bottom_right_boundary = createVector(nuwa.x + cols / 2, nuwa.y + rows / 2);
+  var upper_left_boundary = createVector(floor(nuwa.x - cols / 2), floor(nuwa.y - rows / 2));
+  var bottom_right_boundary = createVector(floor(nuwa.x + cols / 2), floor(nuwa.y + rows / 2));
 
-  var center_point = createVector(parseInt(cols / 2), parseInt(rows / 2));
+  var center_point = createVector(floor(cols / 2), floor(rows / 2));
   var x_translation = nuwa.x - center_point.x;
   var y_translation = nuwa.y - center_point.y;
 
@@ -81,12 +86,6 @@ function draw() {
   // Paint nuwa and the objectives last, so they're always on top of the painted world
   nuwa.show();
   nuwa.death();
-
-  var cols = floor(width / tile_scale);
-  var rows = floor(height / tile_scale);
-  var center_point = createVector(parseInt(cols / 2), parseInt(rows / 2));
-  var x_translation = nuwa.x - center_point.x;
-  var y_translation = nuwa.y - center_point.y;
 
   for (var i = 0; i < objectives.length; i++) {
     var objective = objectives[i];
@@ -131,7 +130,7 @@ function keyPressed() {
       break;
 
     case 187: // plus key
-      if (tile_scale < 30) {
+      if (tile_scale < 50) {
         tile_scale += 5;
       }
       break;
