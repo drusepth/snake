@@ -4,7 +4,7 @@ var expansion_radius = 10;
 var vision_radius = 5;
 var drawn_world = {};
 
-var objective_count = 10;
+var objective_count = 20;
 var objectives = [];
 
 function setup() {
@@ -119,14 +119,12 @@ function keyPressed() {
       if (tile_scale > 5) {
         tile_scale -= 5;
       }
-      console.log('new tile scale: ' + tile_scale);
       break;
 
     case 187: // plus key
       if (tile_scale < 30) {
         tile_scale += 5;
       }
-      console.log('new tile scale: ' + tile_scale);
       break;
 
     default:

@@ -21,7 +21,6 @@ function Objective() {
 
   this.randomize_color = function() {
     var current_world_tile = drawn_world[this.coordinate_vector()];
-    console.log('current world tile: ' + current_world_tile);
 
     switch (current_world_tile) {
       case undefined: // water tile

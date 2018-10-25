@@ -58,11 +58,10 @@ function Snake() {
 
   this.capture_objective = function (objective) {
     var distance = dist(this.x, this.y, objective.x, objective.y);
-    //console.log('obj distance', distance);
 
     if (distance < 1) {
       this.total++;
-      if (this.total % 20 == 0 && tile_scale > 5) {
+      if (this.total % 30 == 0 && tile_scale > 5) {
         tile_scale -= 5;
       }
       return true;
