@@ -7,9 +7,10 @@ var game_paused = false;
 
 var objective_count = 25;
 var objectives = [];
+var canvas;
 
 function setup() {
-  var canvas = createCanvas(
+  canvas = createCanvas(
     floor(window.innerWidth / tile_scale) * tile_scale,
     floor(window.innerHeight / tile_scale) * tile_scale
   );
@@ -146,6 +147,23 @@ function keyPressed() {
         frameRate(0);
       }
       game_paused = !game_paused;
+      break;
+
+    case 68: // d
+      game_paused = true;
+      var canvas_export = canvas.canvas.toDataURL('image/jpeg', 1.0);
+      var img = document.createElement('img');
+      img.src = canvas_export;
+
+      var a = document.createElement('a');
+      a.setAttribute("download", "map.jpeg");
+      a.setAttribute("href", canvas_export);
+      a.appendChild(img);
+
+      var w = open();
+      w.document.title = 'Export Map';
+      w.document.body.innerHTML = 'Left-click on the map below to save it to your downloads folder.';
+      w.document.body.appendChild(a);
       break;
 
     default:
