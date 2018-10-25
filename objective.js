@@ -22,16 +22,21 @@ function Objective() {
   this.randomize_color = function() {
     var current_world_tile = drawn_world[this.coordinate_vector()];
 
-    switch (current_world_tile) {
-      case undefined: // water tile
-      case null:
-      case this.TILE_WATER:
+    if (current_world_tile === undefined || current_world_tile === null) {
+      this.reward = this.random_selection([
+        this.TILE_GRASS
+      ]);
+      return;
+    }
+
+    switch (this.comparable_vector(current_world_tile)) {
+      case this.comparable_vector(this.TILE_WATER):
         this.reward = this.random_selection([
           this.TILE_GRASS
         ]);
         break;
 
-      case this.TILE_DIRT:
+      case this.comparable_vector(this.TILE_DIRT):
         this.reward = this.random_selection([
           this.TILE_SAND,
           this.TILE_GRASS,
@@ -40,7 +45,7 @@ function Objective() {
         ]);
         break;
 
-      case this.TILE_GRASS:
+      case this.comparable_vector(this.TILE_GRASS):
         this.reward = this.random_selection([
           this.TILE_WATER,
           this.TILE_DIRT,
@@ -49,14 +54,14 @@ function Objective() {
         ]);
         break;
 
-      case this.TILE_FOREST:
+      case this.comparable_vector(this.TILE_FOREST):
         this.reward = this.random_selection([
           this.TILE_FOREST,
           this.TILE_GRASS,
         ]);
         break;
 
-      case this.TILE_SAND:
+      case this.comparable_vector(this.TILE_SAND):
         this.reward = this.random_selection([
           this.TILE_DIRT,
           this.TILE_SAND,
@@ -65,16 +70,26 @@ function Objective() {
         break;
 
       default:
+        console.log('unknown tile: ' + current_world_tile);
         this.reward = this.random_selection([
           this.TILE_GRASS,
-          this.TILE_WATER
+          this.TILE_WATER,
+          this.TILE_FOREST,
+          this.TILE_DIRT
         ]);
         break;
     }
   }
 
   this.random_selection = function(options_list) {
-    return options_list[floor(random(options_list.length))];
+    console.log(options_list);
+    var chosen_option = floor(random(options_list.length));
+    console.log(chosen_option);
+    return options_list[chosen_option];
+  };
+
+  this.comparable_vector = function(vector) {
+    return vector.x + '-' + vector.y + '-' + vector.z;
   };
 
   this.coordinate_vector = function() {
