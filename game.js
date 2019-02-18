@@ -13,8 +13,8 @@ var canvas;
 
 function setup() {
   canvas = createCanvas(
-    floor(window.innerWidth / tile_scale) * tile_scale,
-    floor(window.innerHeight / tile_scale) * tile_scale
+    floor(window.innerWidth / tile_scale) * tile_scale + tile_scale,
+    floor(window.innerHeight / tile_scale) * tile_scale + tile_scale
   );
   canvas.parent('game');
   frameRate(10);
