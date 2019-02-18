@@ -43,8 +43,8 @@ function draw() {
     nuwa.update();
   }
 
-  var cols = floor(width / tile_scale);
-  var rows = floor(height / tile_scale);
+  var cols = 1 + floor(width / tile_scale);
+  var rows = 1 + floor(height / tile_scale);
 
   var upper_left_boundary = createVector(floor(nuwa.x - cols / 2), floor(nuwa.y - rows / 2));
   var bottom_right_boundary = createVector(floor(nuwa.x + cols / 2), floor(nuwa.y + rows / 2));
