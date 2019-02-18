@@ -7,7 +7,7 @@ var draw_objectives = true;
 var drawn_world = {};
 var game_paused = false;
 
-var objective_count = 25;
+var objective_count = 1;
 var objectives = [];
 var canvas;
 
@@ -44,10 +44,17 @@ function draw() {
   }
 
   // Determine the area in which we want to render
-  var cols                  = 1 + floor(width  / tile_scale);
-  var rows                  = 1 + floor(height / tile_scale);
-  var upper_left_boundary   = createVector(floor(nuwa.x - cols / 2), floor(nuwa.y - rows / 2));
-  var bottom_right_boundary = createVector(floor(nuwa.x + cols / 2), floor(nuwa.y + rows / 2));
+  var cols                  = floor(width  / tile_scale);
+  var rows                  = floor(height / tile_scale);
+  var upper_left_boundary   = createVector(
+    floor(nuwa.x - cols / 2),
+    floor(nuwa.y - rows / 2)
+  );
+  // We render 1 extra square down and right to make sure we draw to window edge 
+  var bottom_right_boundary = createVector(
+    1 + floor(nuwa.x + cols / 2),
+    1 + floor(nuwa.y + rows / 2)
+  );
 
   // Shift our rendering area to put our protagonist at the center of it
   var center_point          = createVector(floor(cols / 2), floor(rows / 2));
