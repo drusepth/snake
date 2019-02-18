@@ -86,6 +86,10 @@ function Snake() {
     }
   };
 
+  this.health_check = function () {
+    this.death();
+  };
+
   this.death = function() {
     for (var i = 0; i < this.tail.length; i++) {
       var pos = this.tail[i];

@@ -17,7 +17,7 @@ function setup() {
     floor(window.innerHeight / tile_scale) * tile_scale + tile_scale
   );
   canvas.parent('game');
-  frameRate(10);
+  frameRate(2);
 
   expansion_radius = floor(height / tile_scale) * floor(width / tile_scale) / random(200, 300);
 
@@ -43,22 +43,21 @@ function draw() {
     nuwa.update();
   }
 
-  var cols = 1 + floor(width / tile_scale);
-  var rows = 1 + floor(height / tile_scale);
-
-  var upper_left_boundary = createVector(floor(nuwa.x - cols / 2), floor(nuwa.y - rows / 2));
+  // Determine the area in which we want to render
+  var cols                  = 1 + floor(width  / tile_scale);
+  var rows                  = 1 + floor(height / tile_scale);
+  var upper_left_boundary   = createVector(floor(nuwa.x - cols / 2), floor(nuwa.y - rows / 2));
   var bottom_right_boundary = createVector(floor(nuwa.x + cols / 2), floor(nuwa.y + rows / 2));
 
-  var center_point = createVector(floor(cols / 2), floor(rows / 2));
-  var x_translation = nuwa.x - center_point.x;
-  var y_translation = nuwa.y - center_point.y;
+  // Shift our rendering area to put our protagonist at the center of it
+  var center_point          = createVector(floor(cols / 2), floor(rows / 2));
+  var x_translation         = nuwa.x - center_point.x;
+  var y_translation         = nuwa.y - center_point.y;
 
-  if (draw_world_grid) {
-    stroke(0, 0, 0);
-  } else {
-    noStroke();
-  }
+  // Turn a black stroke on/off depending on the player's preference
+  draw_world_grid ? stroke(0, 0, 0) : noStroke();
 
+  // Draw this visible chunk of the world for the player!
   for (var y = upper_left_boundary.y; y < bottom_right_boundary.y; y++) {
     for (var x = upper_left_boundary.x; x < bottom_right_boundary.x; x++) {
       var this_cell_position = createVector(x, y);
@@ -66,24 +65,21 @@ function draw() {
       var cell_data = drawn_world[this_cell_position] || null;
       if (cell_data !== null) {
         fill(cell_data.x, cell_data.y, cell_data.z);
+
+        // todo image of cell type (forest, mountains, etc) here
         rect(relative_coordinates.x * tile_scale, relative_coordinates.y * tile_scale, tile_scale, tile_scale);
       }
     }
   }
-
+  // After we're done, reset stroke back to the default black
   stroke(0, 0, 0);
+
+  // Game logic: check for objective captures
   for (var i = 0; i < objectives.length; i++) {
     var objective = objectives[i];
     //console.log('Objective:', objective.x, objective.y);
     if (nuwa.capture_objective(objective)) {
-      var coordinates_to_paint = objective.reward_coordinate_vectors();
-      for (var i = 0; i < coordinates_to_paint.length; i++) {
-        drawn_world[coordinates_to_paint[i]] = objective.reward;
-      }
-
-      // Re-use this objective instead of making a new one + garbage collecting
-      objective.set_position(random_location());
-      objective.randomize_color();
+      objective.capture(nuwa, drawn_world);
     }
   }
 
@@ -91,8 +87,11 @@ function draw() {
   if (draw_nuwa) {
     nuwa.show();
   }
-  nuwa.death();
 
+  // Do a quick health check to end the game if we're dead
+  nuwa.health_check();
+
+  // Draw all the objectives we can capture
   if (draw_objectives) {
     for (var i = 0; i < objectives.length; i++) {
       var objective = objectives[i];
@@ -100,7 +99,14 @@ function draw() {
       var relative_coordinates = createVector(objective.x - x_translation, objective.y - y_translation);
       //console.log("Drawing objective @", relative_coordinates.x, relative_coordinates.y);
       fill(objective_color.x, objective_color.y, objective_color.z);
-      ellipse(relative_coordinates.x * tile_scale + (tile_scale / 2), relative_coordinates.y * tile_scale + (tile_scale / 2), tile_scale, tile_scale);
+
+      // todo objective image in the circle
+      ellipse(
+        relative_coordinates.x * tile_scale + (tile_scale / 2),
+        relative_coordinates.y * tile_scale + (tile_scale / 2),
+        tile_scale * preferences.graphics.objective_scale,
+        tile_scale * preferences.graphics.objective_scale
+      );
     }
   }
 }

@@ -92,6 +92,17 @@ function Objective() {
     return createVector(this.x, this.y);
   };
 
+  this.capture = function(who_captured, world) {
+    var coordinates_to_paint = this.reward_coordinate_vectors();
+    for (var i = 0; i < coordinates_to_paint.length; i++) {
+      world[coordinates_to_paint[i]] = this.reward;
+    }
+
+    // Re-use this objective instead of making a new one + garbage collecting
+    this.set_position(random_location());
+    this.randomize_color();
+  };
+
   this.reward_coordinate_vectors = function () {
     return [
       createVector(this.x, this.y),
