@@ -6,6 +6,11 @@ function Snake() {
   this.total = 0;
   this.tail = [];
 
+  // Preload images
+  // this.assets = {
+  //   snake_head: loadImage('images/snake_head.png')
+  // };
+
   this.update = function() {
     // Build tail
     if (this.total === this.tail.length) {
@@ -35,6 +40,7 @@ function Snake() {
     }
 
     // Since the map is moving under us, we can safely assume we're always in the middle of it.
+    // todo draw snake_head rotated and the correct size here instead
     rect(floor(cols / 2) * tile_scale, floor(rows / 2) * tile_scale, tile_scale, tile_scale);
   };
 
@@ -42,6 +48,7 @@ function Snake() {
     this.xspeed = x;
     this.yspeed = y;
   };
+
   this.current_direction = function () {
     if (this.xspeed == 0 && this.yspeed == -1) {
       return 'up';
