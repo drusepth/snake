@@ -7,7 +7,7 @@ var draw_objectives = true;
 var drawn_world = {};
 var game_paused = false;
 
-var objective_count = 1;
+var objective_count = 25;
 var objectives = [];
 var canvas;
 
@@ -17,9 +17,9 @@ function setup() {
     floor(window.innerHeight / tile_scale) * tile_scale + tile_scale
   );
   canvas.parent('game');
-  frameRate(2);
+  frameRate(10);
 
-  expansion_radius = floor(height / tile_scale) * floor(width / tile_scale) / random(200, 300);
+  expansion_radius = floor(height / tile_scale) * floor(width / tile_scale) / random(300, 400);
 
   nuwa = new Snake();
   for (var i = 0; i < objective_count; i++) {
@@ -50,7 +50,7 @@ function draw() {
     floor(nuwa.x - cols / 2),
     floor(nuwa.y - rows / 2)
   );
-  // We render 1 extra square down and right to make sure we draw to window edge 
+  // We render 1 extra square down and right to make sure we draw to window edge
   var bottom_right_boundary = createVector(
     1 + floor(nuwa.x + cols / 2),
     1 + floor(nuwa.y + rows / 2)
@@ -85,6 +85,7 @@ function draw() {
   for (var i = 0; i < objectives.length; i++) {
     var objective = objectives[i];
     //console.log('Objective:', objective.x, objective.y);
+    // todo loop over anyone that can capture objectives here, not just nuwa
     if (nuwa.capture_objective(objective)) {
       objective.capture(nuwa, drawn_world);
     }

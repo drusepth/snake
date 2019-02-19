@@ -4,11 +4,12 @@ function Objective() {
   this.color = null;
   this.reward = null;
 
-  this.TILE_WATER    = createVector(25, 105, 255);
-  this.TILE_SAND     = createVector(194, 178, 128);
-  this.TILE_GRASS    = createVector(144, 238, 144);
-  this.TILE_DIRT     = createVector(237, 201, 175);
-  this.TILE_FOREST   = createVector(34, 139, 34);
+  this.TILE_WATER     = createVector(25, 105, 255);
+  this.TILE_SAND      = createVector(194, 178, 128);
+  this.TILE_GRASS     = createVector(144, 238, 144);
+  this.TILE_DIRT      = createVector(237, 201, 175);
+  this.TILE_FOREST    = createVector(34, 139, 34);
+  this.TILE_MOUNTAINS = createVector(128, 128, 128);
 
   this.pre_capture_color = function () {
     return this.reward || this.TILE_WATER;
@@ -32,7 +33,8 @@ function Objective() {
     switch (this.comparable_vector(current_world_tile)) {
       case this.comparable_vector(this.TILE_WATER):
         this.reward = this.random_selection([
-          this.TILE_GRASS
+          this.TILE_GRASS,
+          this.TILE_MOUNTAINS
         ]);
         break;
 
@@ -41,7 +43,8 @@ function Objective() {
             this.TILE_WATER,
             this.TILE_DIRT,
             this.TILE_FOREST,
-            this.TILE_FOREST
+            this.TILE_FOREST,
+            this.TILE_MOUNTAINS
           ]);
           break;
 
@@ -49,12 +52,15 @@ function Objective() {
         this.reward = this.random_selection([
           this.TILE_SAND,
           this.TILE_GRASS,
-          this.TILE_WATER
+          this.TILE_WATER,
+          this.TILE_MOUNTAINS
         ]);
         break;
 
       case this.comparable_vector(this.TILE_FOREST):
         this.reward = this.random_selection([
+          this.TILE_FOREST,
+          this.TILE_FOREST,
           this.TILE_FOREST,
           this.TILE_GRASS,
         ]);
@@ -64,6 +70,13 @@ function Objective() {
         this.reward = this.random_selection([
           this.TILE_DIRT,
           this.TILE_SAND
+        ]);
+        break;
+
+      case this.comparable_vector(this.TILE_MOUNTAINS):
+        this.reward = this.random_selection([
+          this.TILE_MOUNTAINS,
+          this.TILE_DIRT
         ]);
         break;
 
@@ -104,6 +117,9 @@ function Objective() {
   };
 
   this.reward_coordinate_vectors = function () {
+    // todo other shapes depending on the objective and/or a property on it?
+    // e.g. river = 3-4 in a line
+
     return [
       createVector(this.x, this.y),
       // up/down/left/right

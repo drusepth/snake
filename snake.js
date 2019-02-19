@@ -6,7 +6,7 @@ function Snake() {
   this.total = 0;
   this.tail = [];
 
-  // Preload images
+  // Preload images (needs a local server because cors lol)
   // this.assets = {
   //   snake_head: loadImage('images/snake_head.png')
   // };
